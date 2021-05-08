@@ -1,12 +1,27 @@
+import axios from 'axios';
 import Chart from 'react-apexcharts';
-
+import { BASE_URL } from 'utils/requests';
+type ChartData = {
+    labels: string[]
+    series: number[]
+}
 const DonutChart = () => {
+
+
+    let chartData: ChartData = { labels: [], series: [] };
+
+    axios.get(`${BASE_URL}/sales/amount-by-seller`)
+        .then(response => {
+            console.log(response.data)
+        });
+
+
 
     const mockData = {
         series: [477138, 499928, 444867, 220426, 473088],
         labels: ['Anakin', 'Barry Allen', 'Kal-El', 'Logan', 'Padmé']
     }
-    
+
     const options = {
         legend: {
             show: true
@@ -14,11 +29,11 @@ const DonutChart = () => {
     }
 
     return (
-        <Chart 
-        options={{ ...options, labels: mockData.labels}}
-        series={mockData.series}
-        type ="donut"
-        height="240"
+        <Chart
+            options={{ ...options, labels: mockData.labels }}
+            series={mockData.series}
+            type="donut"
+            height="240"
         />
     );
 }
